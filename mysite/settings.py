@@ -26,7 +26,7 @@ SECRET_KEY = '9)x_s4ojf195%%2%0m+7v!n=m%^r&iy+^%snj@y15tc++0lq)v'
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['techiestkids-blog.herokuapp.com', 'localhost']
 
 
 # Application definition
