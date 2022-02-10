@@ -28,7 +28,6 @@ def post_list(request, tag_slug=None):
     except PageNotAnInteger:
         posts = paginator.page(1)
     return render(request, 'blog/post/list.html', {'page':page,'posts': posts, 'tag':tag})
-    pass
 
 class PostListView(ListView):
     queryset = Post.published.all()
