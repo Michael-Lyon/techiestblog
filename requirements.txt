@@ -7,4 +7,5 @@ Markdown
 psycopg2
 pyp
 sqlparse
+gunicorn
 whitenoise
