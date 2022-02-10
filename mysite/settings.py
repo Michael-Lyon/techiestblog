@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9)x_s4ojf195%%2%0m+7v!n=m%^r&iy+^%snj@y15tc++0lq)v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['techiestkids-blog.herokuapp.com', 'localhost']
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'account',
+    'django_heroku',
     'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
@@ -176,3 +177,7 @@ django_heroku.settings(locals())
 #         },
 #     },
 # }
+
+
+LOGIN_REDIRECT_URL = 'blog:post_list'
+LOGOUT_REDIRECT_URL = 'accounts:logout'

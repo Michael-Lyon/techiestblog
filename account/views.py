@@ -42,7 +42,8 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            return redirect(reverse('account:login'))
+            login(request, user=new_user)
+            return redirect('blog:post_list')
     else:
         user_form = UserRegistrationForm()
     return render(request,
