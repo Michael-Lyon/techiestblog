@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../Django-3-by-Example-master/Chapter01/mysite/blog/templates"
+		}
+	],
+	"settings": {}
+}
