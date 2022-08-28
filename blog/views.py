@@ -27,13 +27,15 @@ def post_list(request, tag_slug=None):
         posts = paginator.page(page)
     except PageNotAnInteger:
         posts = paginator.page(1)
-    return render(request, 'blog/post/list.html', {'page':page,'posts': posts, 'tag':tag})
+    return render(request, 'blog/main/index.html', {'page': page, 'posts': posts, 'tag': tag})
+    # return render(request, 'blog/post/list.html', {'page':page,'posts': posts, 'tag':tag})
 
 class PostListView(ListView):
     queryset = Post.published.all()
     context_object_name = 'posts'
+    template_name = 'blog/main/index.html'
     paginate_by = 3
-    template_name = 'blog/post/list.html'
+    # template_name = 'blog/post/list.html'
 
 
 def post_detail(request, year, month, day, post):
@@ -59,14 +61,17 @@ def post_detail(request, year, month, day, post):
     else:
         comment_form = CommentForm()
     return render(request,
-                'blog/post/detail.html',{'post': post,'comments': comments,'new_comment': new_comment,'comment_form': comment_form,
+                'blog/main/post.html',{'post': post,'comments': comments,'new_comment': new_comment,'comment_form': comment_form,
                                          'similar_posts': similar_posts})
+    # return render(request,
+    #             'blog/post/detail.html',{'post': post,'comments': comments,'new_comment': new_comment,'comment_form': comment_form,
+    #                                      'similar_posts': similar_posts})
 
 
 def share_post(request, post_id):
     # retrieve the post by post_id
     post = get_object_or_404(Post, id=post_id, status='published')
-
+    sent = False
     if request.method == 'POST':
         #Form was submitted
         form = EmailPostForm(request.POST)

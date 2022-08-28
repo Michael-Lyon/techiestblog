@@ -1,10 +1,54 @@
-{% extends "blog/base.html" %}
+{% extends "blog/main/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
 {% block title %}Create a post{% endblock %}
+
+{% block header %}
+
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url({% static 'main/assets/img/post-bg.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>Create a post</h1>
+
+                    <h3 class="subheading"> Share your thoughts
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% endblock header %}
 {% block content %}
-<h1>Create a post</h1>
-<form action="." method="post">
-{{ form.as_p }}
-{% csrf_token %}
-<p><input type="submit" value="Post"></p>
-</form>
-{% endblock %}
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <form action="." method="post">
+                    <form method="POST" action=".">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-floating">
+                            {{ field|add_class:"form-control" }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}
+                        </div>
+                        {% endfor %}
+                        <div class="form-floating">
+                            <button class="w-100 btn btn-lg btn-primary" type="submit">POST</button>
+                        </div>
+                    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</article>
+
+
+{% endblock content %}

@@ -1,0 +1,170 @@
+{% extends 'blog/main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load blog_tags %}
+{% block title %}
+{{ post.title }}
+{% endblock title %}
+{% block header %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url({% static 'main/assets/img/home-bg.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{ post.title }}</h1>
+
+                    <h3 class="subheading"> Tags:
+                        {% for tag in post.tags.all %}
+                        <a href="{% url "blog:post_list_by_tag" tag.slug %}">
+                            {{ tag.name }}
+                        </a>
+                        {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        </p>
+                    </h3>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!">{{ post.author }}</a>
+                        on {{ post.publish }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                </p>
+                {{ post.body|markdown }}
+                <p>
+            </div>
+
+            <div class="container mt-5">
+
+                <div class="row  d-flex justify-content-center">
+
+                    <div class="col-md-8 overflow-auto" style="height:70vh;">
+
+                        <div class="headings d-flex justify-content-between align-items-center mb-3">
+            
+                            <div class="buttons">
+                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal">Leave A Comment<i class="fa-duotone fa-comment-dots"></i></button>
+
+                            </div>
+
+                        </div>
+                        {% comment %} Comment section {% endcomment %}
+                        {% for comment in comments %}
+                        <div class="card p-3 mt-2">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="user d-flex flex-row align-items-center">
+                                    <span><small class="font-weight-bold text-primary">{{ comment.name }}</small> <small
+                                            class="font-weight-bold">{{ comment.body|linebreaks }}
+                                        </small></span>
+
+                                </div>
+                                <small>{{ comment.created }}</small>
+
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>There are no comments yet.</p>
+                        <div class="card p-3 mt-2">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="user d-flex flex-row align-items-center">
+                                    <span><small class="font-weight-bold text-primary"></small> <small
+                                            class="font-weight-bold">No comments yet.
+                                        </small></span>
+
+                                </div>
+                                <small>3 days ago</small>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
+                    
+                    
+                    <div class="col-md-8 mt-4">
+
+
+                        <h2 class="mt-4">Similar posts</h2>
+                        {% for post in similar_posts %}
+                        <div class="row gx-4 gx-lg-5 justify-content-center mt-4">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <ul class="list-inline text-center">
+                                    <li class="list-inline-item">
+                                        <p>
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </p>
+                                </ul>
+                            </div>
+                        </div>
+                        {% empty %}
+                        There are no similar posts yet.
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                         <!-- Modal -->
+                        <div class="w-100 m-auto modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div> 
+                                    <div class="modal-body">
+                                       <form method="POST" action=".">
+                                            {% csrf_token %} 
+                                            <h3 class="h3 mb-3 fw-normal">What do you think?</h3>
+                                            {% for field in comment_form %}
+                                            <div class="form-floating">
+                                                {{ field|add_class:"form-control" }}
+                                                <label for="{{ field.id_for_label }}">{{ field.label }}
+                                            </div>
+                                            {% endfor %}
+                                            <div class="form-floating">
+                                                <button class="w-100 btn btn-lg btn-primary" type="submit">comment</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+               
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+</article>
+
+{% endblock content %}
