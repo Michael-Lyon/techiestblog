@@ -28,7 +28,7 @@ SECRET_KEY = '9)x_s4ojf195%%2%0m+7v!n=m%^r&iy+^%snj@y15tc++0lq)v'
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['techiestkids-blog.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['techiestkidszone.up.railway.app', 'localhost']
 
 
 # Application definition
@@ -187,3 +187,8 @@ logger = logging.getLogger(__name__)
 
 LOGIN_REDIRECT_URL = 'blog:post_list'
 LOGOUT_REDIRECT_URL = 'account:login'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://techiestkidszone.up.railway.app"
+]
